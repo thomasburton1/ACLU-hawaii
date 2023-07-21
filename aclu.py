@@ -43,7 +43,10 @@ def getCases():
             for item in text:
                 #print(item)
                 if "No. " in item.text:
-                    case.append(item.text)
+                    details = item.text.split(',', 1)
+                    # will give us [case number, date & time]
+                    for x in details:
+                        case.append(x)
                 if "Brief Description" in item.text:
                     summary = ""
                     descriptions = item.find_next_siblings()
@@ -53,5 +56,4 @@ def getCases():
 
             if not len(case) == 0:
                 cases.append(case)
-    print(cases)
     return cases
