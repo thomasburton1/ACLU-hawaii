@@ -5,54 +5,53 @@ from bs4 import BeautifulSoup
 Idea: use GPT model to summarize the cases for easier reading
 '''
 
-keywords = ["constitution",
-"police",
-"title iv",
-"title ix",
-"homeless",
-"civil right", 
-"freedom of speech",
-"bill of rights",
-"LGBT",
-"vote",
-"amendment",
-"bail",
-"discrimination",
-"abortion",
-"first amendment",
-"eighth amendment"]
+def getCases():
 
-URL = "https://www.courts.state.hi.us/courts/oral_arguments/oral_arguments_schedule"
-page = requests.get(URL)
+    keywords = ["constitution",
+                "police",
+                "title iv",
+                "title ix",
+                "homeless",
+                "civil right", 
+                "freedom of speech",
+                "bill of rights",
+                "LGBT",
+                "vote",
+                "amendment",
+                "bail",
+                "discrimination",
+                "abortion",
+                "first amendment",
+                "eighth amendment"]
+    
 
-soup = BeautifulSoup(page.content, "html.parser")
+    URL = "https://www.courts.state.hi.us/courts/oral_arguments/oral_arguments_schedule"
+    page = requests.get(URL)
 
-rows = soup.findAll("table")[0].findAll("tr")
+    soup = BeautifulSoup(page.content, "html.parser")
 
-cases = []
+    rows = soup.findAll("table")[0].findAll("tr")
 
-for row in rows:
-    print()
-    cells = row.findChildren('td')
-    for cell in cells:
-        case = []
+    cases = []
 
-        text = cell.findChildren(["p", "h3"])
-        for item in text:
-            print(item)
-            if "No. " in item.text:
-               case.append(item.text)
-            if "Brief Description" in item.text:
-                summary = ""
-                descriptions = item.find_next_siblings()
-                for description in descriptions:
-                    summary += description.text
-                case.append(summary)
-        cases.append(case)
+    for row in rows:
+        #print()
+        cells = row.findChildren('td')
+        for cell in cells:
+            case = []
+            text = cell.findChildren(["p", "h3"])
+            for item in text:
+                #print(item)
+                if "No. " in item.text:
+                    case.append(item.text)
+                if "Brief Description" in item.text:
+                    summary = ""
+                    descriptions = item.find_next_siblings()
+                    for description in descriptions:
+                        summary += description.text
+                    case.append(summary)
 
-print()
-for case in cases:
-    print()
-    for detail in case:
-        print(detail)
-        
+            if not len(case) == 0:
+                cases.append(case)
+    print(cases)
+    return cases
