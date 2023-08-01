@@ -5,26 +5,7 @@ from bs4 import BeautifulSoup
 Idea: use GPT model to summarize the cases for easier reading
 '''
 
-def getCases():
-
-    keywords = ["constitution",
-                "police",
-                "title iv",
-                "title ix",
-                "homeless",
-                "civil right", 
-                "freedom of speech",
-                "bill of rights",
-                "LGBT",
-                "vote",
-                "amendment",
-                "bail",
-                "discrimination",
-                "abortion",
-                "first amendment",
-                "eighth amendment"]
-    
-
+def getCases(keywords):
     URL = "https://www.courts.state.hi.us/courts/oral_arguments/oral_arguments_schedule"
     page = requests.get(URL)
 
