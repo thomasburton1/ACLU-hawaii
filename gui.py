@@ -12,8 +12,6 @@ from functools import partial
 # create tkinter window
 window = tk.Tk()
 
-window.iconbitmap("compliant.ico")
-
 # set window title
 window.title("ACLU Hawaii")
 
@@ -39,7 +37,6 @@ keywords = ["constitution",
                 "eighth amendment"]
 
 def buildInterface(inputted_keywords):
-
     # add widgets
     keywords_frame = tk.Frame(window)
 
@@ -57,7 +54,10 @@ def buildInterface(inputted_keywords):
     keyword_textbox.pack()
 
     def refresh():
+        # grab the keywords from the keyword_textbox
         new_keywords = keyword_textbox.get('1.0', tk.END).splitlines()
+        # remove all instances of empty strings in the list
+        new_keywords = list(filter(lambda x: x != '', new_keywords)) 
         for widget in window.winfo_children():
             widget.destroy()
         buildInterface(new_keywords)
